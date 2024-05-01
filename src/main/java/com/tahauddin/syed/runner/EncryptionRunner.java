@@ -3,6 +3,7 @@ package com.tahauddin.syed.runner;
 import com.tahauddin.syed.service.EncryptionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,9 @@ public class EncryptionRunner implements CommandLineRunner {
 
     private final EncryptionService encryptionService;
 
+    @Value("${config.path:${HOME}}")
+    private String path;
+
     @Override
     public void run(String... args) throws Exception {
         String encryptedText = encryptionService.encrypt ("EncryptMeText" );
@@ -20,5 +24,8 @@ public class EncryptionRunner implements CommandLineRunner {
 
         String decrypt = encryptionService.decrypt ( encryptedText ) ;
         log.info("Decryption Text is :: {}", decrypt);
+
+
+        log.info("Config Path is :: {}", path);
     }
 }
